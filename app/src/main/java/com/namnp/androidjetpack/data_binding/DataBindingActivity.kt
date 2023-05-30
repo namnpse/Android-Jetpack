@@ -24,9 +24,12 @@ class DataBindingActivity : AppCompatActivity() {
         }
 
         // Ex 2
-        val student = getStudent()
-        binding.userName.text = student.name
-        binding.userEmail.text = student.email
+        binding.student = getStudent()
+
+        // dont need to use this anymore
+//        val student = getStudent()
+//        binding.userName.text = student.name
+//        binding.userEmail.text = student.email
     }
 
     private fun displayGreeting() {
