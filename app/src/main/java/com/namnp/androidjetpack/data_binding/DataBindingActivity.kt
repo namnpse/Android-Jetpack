@@ -18,14 +18,24 @@ class DataBindingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_data_binding)
 
+        // Ex 1
         binding.submitButton.setOnClickListener {
             displayGreeting()
         }
+
+        // Ex 2
+        val student = getStudent()
+        binding.userName.text = student.name
+        binding.userEmail.text = student.email
     }
 
     private fun displayGreeting() {
         binding.apply {
             greetingTextView.text = "Hello! " + nameEditText.text
         }
+    }
+
+    private fun getStudent(): Student {
+        return Student(id = "1", name = "Nam", email = "nam@gmail.com")
     }
 }
