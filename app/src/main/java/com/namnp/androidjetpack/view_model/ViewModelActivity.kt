@@ -10,25 +10,28 @@ import com.namnp.androidjetpack.databinding.ActivityViewModelBinding
 
 // SUMMARY
 
-//When we are using an android app,
-//when a configuration change like screen rotation happens,
-//app has to destroy and recreate the activity or fragment with new configurations.
-//
-//As a result of that,
-//values(states) created during the running period of the activity will also be destroyed.
-//
-//-> The Android Jetpack View Model architecture component has introduced as a solution for above problem.
-//We can use a view model object to safely keep and retrieve values(states) of that activity.
-//(Note: this only available during the run time of the app, if we need a permanent data storage we need to use a database)
-//
-//As its name says, view model is a model for a view. We usually create a view model for each activity.
-//A ViewModel’s onCleared() is called only when the app is put into the background and the app process is killed in order to free up the system’s memory.
-//Therefore, lifecycle changes of activities and fragments does not affect to their ViewModels.
-//(Activities and fragments may destroy and recreate, but view model will live throughout the process)
-// 2 ways of init a view model
-// C1: using ViewModelProvider (with/without ViewModelFactory)
-// C2: using extension
+/*
+when a configuration change like screen rotation happens,
+app has to destroy and recreate the activity or fragment with new configurations.
 
+As a result of that, values(states) created during the running period of the activity will also be destroyed.
+
+-> The Android Jetpack View Model architecture component has introduced as a solution for above problem.
+We can use a view model object to safely keep and retrieve values(states) of that activity.
+
+As its name says, view model is a model for a view. We usually create a view model for each activity.
+A ViewModel’s onCleared() is called:
+ + when the app is put into the background and the app process is killed in order to free up the system’s memory.
+ + user invokes finish() or click back
+Therefore, lifecycle changes of activities and fragments does not affect to their ViewModels.
+(Activities and fragments may destroy and recreate, but view model will live throughout the process)
+*/
+/* 2 ways of init a view model
+ C1: using ViewModelProvider (with/without ViewModelFactory)
+ C2: using extension*/
+
+//ViewModelProvider can only instantiate ViewModels with no arg constructors.
+// -> if the ViewModel has constructor parameters(arguments) , ViewModelProvider need a little extra support to create instances of it (ViewModelFactory)
 
 class ViewModelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityViewModelBinding
@@ -63,12 +66,25 @@ class ViewModelActivity : AppCompatActivity() {
         // Ex 2
         // create custom view model by using View Model Factory to pass arguments to view model
         // if pass arguments directly without using View Model factory -> error
-        binding.tvCount.text = viewModel.getTotal().toString()
+//        binding.tvCount.text = viewModel.getTotal().toString()
         binding.submitButton.setOnClickListener {
             viewModel.add(binding.edtNumber.text.toString().toInt())
-            binding.tvCount.text = viewModel.getTotal().toString()
+//            binding.tvCount.text = viewModel.getTotal().toString()
         }
 
+        // Ex 3: using live data
+        //  RxJava >< LiveData:
+        /*RxJava:
+        + is not a lifecycle aware component.
+        -> data stream does not go off (when activity, fragment or service becomes inactive).
+        + As a result of that, memory leaks or crashes can happen.
+        + Therefore, we have to write codes to dispose them manually.
+        LiveData:
+        + Android LiveData aware of lifecycle status changes.
+        + clean up themselves(stop emitting data) when their associated lifecycle is destroyed.*/
+        viewModel.totalLiveData.observe(this) {
+            binding.tvCount.text = it.toString()
+        }
 
     }
 }
