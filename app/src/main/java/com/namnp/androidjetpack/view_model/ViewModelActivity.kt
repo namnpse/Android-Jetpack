@@ -35,10 +35,11 @@ Therefore, lifecycle changes of activities and fragments does not affect to thei
 
 class ViewModelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityViewModelBinding
-    // 2 ways of init a view model
+    // 3 ways of init a view model
     // C1
     private lateinit var viewModel: CountViewModel
     // C2: using extension
+    // val viewModel by viewModels<MyViewModel>()
 //    For Activities.
 //    implementation 'androidx.activity:activity-ktx:1.3.1'
 //    For Fragments
@@ -52,9 +53,11 @@ class ViewModelActivity : AppCompatActivity() {
     private lateinit var viewModelFactory: CustomViewModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // C2
         binding = DataBindingUtil.setContentView(this, R.layout.activity_view_model)
+        // C3
+//        binding = ActivityViewModelBinding.inflate(layoutInflater)
         viewModelFactory = CustomViewModelFactory(startingTotal = 10)
-        // C1
         viewModel = ViewModelProvider(this, viewModelFactory)[CountViewModel::class.java]
         binding.viewModel = viewModel
 
