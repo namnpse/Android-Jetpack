@@ -56,6 +56,7 @@ class ViewModelActivity : AppCompatActivity() {
         viewModelFactory = CustomViewModelFactory(startingTotal = 10)
         // C1
         viewModel = ViewModelProvider(this, viewModelFactory)[CountViewModel::class.java]
+        binding.viewModel = viewModel
 
         // Ex 1
 //        binding.tvCount.text = viewModel.getCount().toString()
@@ -68,6 +69,7 @@ class ViewModelActivity : AppCompatActivity() {
         // if pass arguments directly without using View Model factory -> error
 //        binding.tvCount.text = viewModel.getTotal().toString()
         binding.submitButton.setOnClickListener {
+            if(binding.edtNumber.text.toString().isEmpty()) return@setOnClickListener
             viewModel.add(binding.edtNumber.text.toString().toInt())
 //            binding.tvCount.text = viewModel.getTotal().toString()
         }
@@ -82,9 +84,17 @@ class ViewModelActivity : AppCompatActivity() {
         LiveData:
         + Android LiveData aware of lifecycle status changes.
         + clean up themselves(stop emitting data) when their associated lifecycle is destroyed.*/
+//        viewModel.totalLiveData.observe(this) {
+//            binding.tvCount.text = it.toString()
+//        }
+
+/*      Ex 4: binding + view model + live data
+        dont need to use, all is binding in xml file
         viewModel.totalLiveData.observe(this) {
             binding.tvCount.text = it.toString()
         }
-
+        but MUST to add this line
+        */
+        binding.lifecycleOwner = this
     }
 }

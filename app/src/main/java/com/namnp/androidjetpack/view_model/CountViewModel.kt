@@ -18,7 +18,10 @@ class CountViewModel(startingTotal: Int): ViewModel() {
 
     fun getCount(): Int = count
 
-    fun getUpdatedCount(): Int = ++count
+    fun getUpdatedCount(): Int {
+        _totalLiveData.value = count
+        return ++count
+    }
 
     fun getTotal() = total
 
