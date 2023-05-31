@@ -8,6 +8,28 @@ import androidx.lifecycle.ViewModelProvider
 import com.namnp.androidjetpack.R
 import com.namnp.androidjetpack.databinding.ActivityViewModelBinding
 
+// SUMMARY
+
+//When we are using an android app,
+//when a configuration change like screen rotation happens,
+//app has to destroy and recreate the activity or fragment with new configurations.
+//
+//As a result of that,
+//values(states) created during the running period of the activity will also be destroyed.
+//
+//-> The Android Jetpack View Model architecture component has introduced as a solution for above problem.
+//We can use a view model object to safely keep and retrieve values(states) of that activity.
+//(Note: this only available during the run time of the app, if we need a permanent data storage we need to use a database)
+//
+//As its name says, view model is a model for a view. We usually create a view model for each activity.
+//A ViewModel’s onCleared() is called only when the app is put into the background and the app process is killed in order to free up the system’s memory.
+//Therefore, lifecycle changes of activities and fragments does not affect to their ViewModels.
+//(Activities and fragments may destroy and recreate, but view model will live throughout the process)
+// 2 ways of init a view model
+// C1: using ViewModelProvider (with/without ViewModelFactory)
+// C2: using extension
+
+
 class ViewModelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityViewModelBinding
     // 2 ways of init a view model
