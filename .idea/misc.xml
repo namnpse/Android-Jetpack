@@ -5,6 +5,11 @@
       <map>
         <entry key="app/src/main/res/layout/activity_data_binding.xml" value="0.21770833333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21770833333333334" />
+        <entry key="app/src/main/res/layout/activity_navigation.xml" value="0.29010416666666666" />
+        <entry key="app/src/main/res/layout/activity_two_way_binding.xml" value="0.2203125" />
+        <entry key="app/src/main/res/layout/activity_view_model.xml" value="0.27994842529296876" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2296875" />
+        <entry key="app/src/main/res/layout/fragment_second.xml" value="0.30416666666666664" />
       </map>
     </option>
   </component>
