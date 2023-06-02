@@ -14,4 +14,8 @@ data class Subscriber(
     var name: String,
     @ColumnInfo("subscriber_email")
     var email: String,
+    @ColumnInfo("subscriber_phone", defaultValue = "No phone") // phone is not null -> use default value for auto migration
+    var phone: String,
+    @ColumnInfo("subscriber_address") // address is nullable -> don't need to use default value for auto migration
+    var address: String? = null,
 )

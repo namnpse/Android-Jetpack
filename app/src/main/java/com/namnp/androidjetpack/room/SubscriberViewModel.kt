@@ -54,7 +54,7 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
             }else {
                 val name = inputName.value!!
                 val email = inputEmail.value!!
-                insert(Subscriber(0, name, email))
+                insert(Subscriber(0, name, email, phone = ""))
                 inputName.value = ""
                 inputEmail.value = ""
             }
