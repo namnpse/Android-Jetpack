@@ -54,7 +54,7 @@ class RoomActivity : AppCompatActivity() {
     }
 
     private fun displaySubscribersList() {
-        subscriberViewModel.subscribers.observe(this, Observer {
+        subscriberViewModel.getAllSubscribersViaFlow.observe(this, Observer {
             Log.i("RoomActivity", it.toString())
             adapter.setData(it)
             adapter.notifyDataSetChanged()
