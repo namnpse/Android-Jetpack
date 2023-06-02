@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidJetpack">
         <activity
+            android:name=".work_manager.WorkManagerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".room.RoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".coroutines.CoroutineActivity"
+            android:exported="false" />
+        <activity
             android:name=".navigation.NavigationActivity"
             android:exported="false" />
         <activity
