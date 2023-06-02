@@ -13,19 +13,19 @@ import kotlinx.coroutines.flow.Flow
 interface SubscriberDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(subscriber: Subscriber)
+    suspend fun insert(subscriber: Subscriber) : Long
 
-    @Insert
-    suspend fun insertList(subscriber: List<Subscriber>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertList(subscriber: List<Subscriber>) : List<Long>
 
     @Update
-    suspend fun update(subscriber: Subscriber)
+    suspend fun update(subscriber: Subscriber) : Int
 
     @Delete
-    suspend fun delete(subscriber: Subscriber)
+    suspend fun delete(subscriber: Subscriber) : Int
 
     @Query("DELETE FROM subscriber_table")
-    suspend fun deleteAll()
+    suspend fun deleteAll() : Int
 
     // don't need to use suspend fun, Room auto do it in background thread
     @Query("SELECT * FROM subscriber_table")
