@@ -3,7 +3,9 @@ package com.namnp.androidjetpack.di
 import android.util.Log
 import javax.inject.Inject
 
-class MemoryCard @Inject constructor(){
+class MemoryCard
+//    @Inject constructor() // removed @Inject constructor cause it's already provided in Module
+{
     init {
         Log.i("DI","Memory Card Constructed")
     }

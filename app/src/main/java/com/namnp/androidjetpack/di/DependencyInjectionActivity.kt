@@ -26,3 +26,7 @@ class DependencyInjectionActivity : AppCompatActivity() {
             .makeACallWithRecording()
     }
 }
+
+// NOTE:
+// if use module (and provide MemoryCard() instance in module) then don't need to use MemoryCard @Inject constructor
+// Binds use for ABSTRACT fun that already provide DI via @Inject constructor -> make module abstract, check NCBatteryModule for more
