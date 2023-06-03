@@ -3,10 +3,16 @@ package com.namnp.androidjetpack.di
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.namnp.androidjetpack.R
+import javax.inject.Inject
 
 class DependencyInjectionActivity : AppCompatActivity() {
+    // inject field
+    @Inject
+    lateinit var smartPhone: SmartPhone // remove private, if not -> cannot be injected
 
-//    private lateinit var smartPhone: SmartPhone
+    // can get any other DI object by using @Inject field like above
+//    @Inject
+//    lateinit var memoryCard: MemoryCard
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,9 +27,13 @@ class DependencyInjectionActivity : AppCompatActivity() {
 //        smartPhone.makeACallWithRecording()
 
         // with DI
-        DaggerSmartPhoneComponent.create()
-            .getSmartPhone()
-            .makeACallWithRecording()
+//        DaggerSmartPhoneComponent.create()
+//            .getSmartPhone()
+//            .makeACallWithRecording()
+
+        // with Inject Field
+        DaggerSmartPhoneComponent.create().inject(this)
+        smartPhone.makeACallWithRecording()
     }
 }
 
