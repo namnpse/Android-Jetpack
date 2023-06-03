@@ -80,6 +80,11 @@ dependencies {
     // Work Manager
     def work_version = "2.3.4"
     implementation "androidx.work:work-runtime-ktx:$work_version"
+
+    // DI
+    // Dagger
+    implementation 'com.google.dagger:dagger:2.27'
+    kapt 'com.google.dagger:dagger-compiler:2.27'
 }
 
 apply plugin: "androidx.navigation.safeargs.kotlin"
