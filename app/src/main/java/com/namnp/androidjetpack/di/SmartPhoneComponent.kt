@@ -1,7 +1,9 @@
 package com.namnp.androidjetpack.di
 
 import dagger.Component
+import javax.inject.Singleton
 
+@Singleton
 @Component(modules = [MemoryCardModule::class, NCBatteryModule::class])
 interface SmartPhoneComponent {
 
