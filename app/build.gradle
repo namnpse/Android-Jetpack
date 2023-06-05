@@ -37,6 +37,7 @@ android {
     // for gradle 4.0+
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
 
     kapt {
