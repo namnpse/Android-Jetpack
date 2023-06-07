@@ -11,6 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidJetpack">
         <activity
+            android:name=".compose.JetpackComposeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_jetpack_compose"
+            android:theme="@style/Theme.AndroidJetpack" />
+        <activity
             android:name=".view_binding.ViewBindingActivity"
             android:exported="false" />
         <activity
