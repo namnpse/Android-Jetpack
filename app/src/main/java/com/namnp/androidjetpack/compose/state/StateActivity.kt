@@ -24,7 +24,17 @@ class StateActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AndroidJetpackTheme {
-                MyButton()
+                val context = LocalContext.current
+                var count by remember {
+                    mutableStateOf(0)
+                }
+                MyButton(
+                    currentCount = count,
+                    updateCount = {
+                        count = it+1
+                        Toast.makeText(context, "$count", Toast.LENGTH_LONG).show()
+                    }
+                )
             }
         }
 
@@ -32,20 +42,34 @@ class StateActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyButton() {
+fun MyButton(currentCount: Int, updateCount: (Int) -> Unit) {
 //    1. remember -> remember state from previous recompose
 //    -> for instance, if you  randomize color at initial run. The randomized color is going to be calculated only once and later reused whenever re-compose is necessary.
 //    remember = store the value just in case recompose is called.
 //    so now when reCompose should actually be triggered? And there the mutable states come to help.
 //    2. mutableState = store the value and in case I update value trigger, recompose for all elements using this data.
-    var count by remember {
-        mutableStateOf(0)
-    }
-    val context = LocalContext.current
+    // Stateful composable cause it has own state -> need to make it Stateless by remote its state
+//    var count by remember {
+//        mutableStateOf(0)
+//    }
+//    3. sending the state from top to bottom.
+//     sending the event up, from bottom to the top.
+//    -> This concept where the state goes down and events go up called unidirectional data flow
+//    -> UDF: unidirectional data flow
+//    4. State Hoisting: move the state up
+//    To apply state hoisting, usually need to add two parameters:
+//    + The current value to display
+//    + An event that request current value to change.
+//    5. Benefit of UDF and State Hoisting:
+//    + Decouples the state from the composable. That allows us to store the state somewhere like local/remote source and update the composable when required.
+//    + State hoisting provides a single data source -> single source of truth.
+//    + It helps to avoid bugs and it makes maintain of the code much easier.
+//    + It also makes our states more secure by encapsulating states.
+//    + State hoisting makes states shareable between different composable.
+//    + Make Unit testing composables easier.
     Button(
         onClick = {
-            count = count+1
-            Toast.makeText(context, "${count}", Toast.LENGTH_LONG).show()
+            updateCount(currentCount)
         },
         contentPadding = PaddingValues(16.dp),
         border = BorderStroke(8.dp, Color.Black),
@@ -54,6 +78,6 @@ fun MyButton() {
             contentColor = Color.White,
         )
     ) {
-        Text(text = "Count is: ${count}")
+        Text(text = "Count is: $currentCount")
     }
 }
