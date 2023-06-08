@@ -11,6 +11,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -28,9 +29,16 @@ class StateActivity : ComponentActivity() {
     }
 }
 
-var count = mutableStateOf(0)
 @Composable
 fun MyButton() {
+//    1. remember -> remember state from previous recompose
+//    -> for instance, if you  randomize color at initial run. The randomized color is going to be calculated only once and later reused whenever re-compose is necessary.
+//    remember = store the value just in case recompose is called.
+//    so now when reCompose should actually be triggered? And there the mutable states come to help.
+//    2. mutableState = store the value and in case I update value trigger, recompose for all elements using this data.
+    var count = remember {
+        mutableStateOf(0)
+    }
     val context = LocalContext.current
     Button(
         onClick = {
