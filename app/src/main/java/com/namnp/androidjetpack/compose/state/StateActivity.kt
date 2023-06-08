@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
@@ -25,18 +26,23 @@ class StateActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AndroidJetpackTheme {
+                val viewModel = viewModel<StateViewModel>() // can be injected if using Hilt
                 val context = LocalContext.current
-                var count by rememberSaveable { // remember cannot handle config changes -> use rememberSavable
+//                var count by rememberSaveable { // remember cannot handle config changes -> use rememberSavable
 //                    to preserve such configuration change, use rememberSaveable instead of remember
 //                    Shouldn't be using rememberSaveable to store large amounts of data or complex data structures that require lengthy serialization or deserialization.
 //                    Following the architectural best practices -> should use a view model for that.
-                    mutableStateOf(0)
-                }
+//                    mutableStateOf(0)
+//                }
+                val count = viewModel.count
                 MyButton(
                     currentCount = count,
                     updateCount = {
-                        count = it+1
-                        Toast.makeText(context, "$count", Toast.LENGTH_LONG).show()
+                        // if not using view model
+//                        count = it+1
+//                        Toast.makeText(context, "$count", Toast.LENGTH_LONG).show()
+                        // if using view model, auto handle config change
+                        viewModel.increaseCount()
                     }
                 )
             }
