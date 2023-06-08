@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -25,7 +26,10 @@ class StateActivity : ComponentActivity() {
         setContent {
             AndroidJetpackTheme {
                 val context = LocalContext.current
-                var count by remember {
+                var count by rememberSaveable { // remember cannot handle config changes -> use rememberSavable
+//                    to preserve such configuration change, use rememberSaveable instead of remember
+//                    Shouldn't be using rememberSaveable to store large amounts of data or complex data structures that require lengthy serialization or deserialization.
+//                    Following the architectural best practices -> should use a view model for that.
                     mutableStateOf(0)
                 }
                 MyButton(
@@ -43,6 +47,7 @@ class StateActivity : ComponentActivity() {
 
 @Composable
 fun MyButton(currentCount: Int, updateCount: (Int) -> Unit) {
+    // NOTE
 //    1. remember -> remember state from previous recompose
 //    -> for instance, if you  randomize color at initial run. The randomized color is going to be calculated only once and later reused whenever re-compose is necessary.
 //    remember = store the value just in case recompose is called.
@@ -67,6 +72,10 @@ fun MyButton(currentCount: Int, updateCount: (Int) -> Unit) {
 //    + It also makes our states more secure by encapsulating states.
 //    + State hoisting makes states shareable between different composable.
 //    + Make Unit testing composables easier.
+//    6. rememberSavable
+//    to preserve such configuration change, use rememberSaveable instead of remember
+//    Shouldn't be using rememberSaveable to store large amounts of data or complex data structures that require lengthy serialization or deserialization.
+//    Following the architectural best practices -> should use a view model for that.
     Button(
         onClick = {
             updateCount(currentCount)
