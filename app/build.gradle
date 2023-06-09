@@ -114,6 +114,10 @@ dependencies {
     // Dagger
     implementation 'com.google.dagger:dagger:2.27'
     kapt 'com.google.dagger:dagger-compiler:2.27'
+
+    // Coroutines Flow
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2'
+
 }
 
 apply plugin: "androidx.navigation.safeargs.kotlin"
