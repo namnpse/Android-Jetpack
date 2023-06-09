@@ -4,6 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -11,6 +15,17 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class CoroutinesFlowViewModel: ViewModel() {
+
+    // StateFlow and SharedFlow
+    // use for state, have init value, emit only if have different values
+    private val _stateFlow = MutableStateFlow<Int>(0) // must have initial value
+    val stateFlow: StateFlow<Int> = _stateFlow
+
+    // use for event, don't have init value, can emit the same values
+    private val _message = MutableSharedFlow<String>() // don't have have initial value
+    val message: SharedFlow<String> = _message
+
+
     val myFlow = flow<Int> {
         for (i in 0..10) {
             emit(i)
@@ -45,6 +60,16 @@ class CoroutinesFlowViewModel: ViewModel() {
                 delay(2000L)
                 Log.i("CoroutinesFlowViewModel", "Cosumed: $it")
             }
+        }
+    }
+
+    fun updateStateFlowAndSharedFlow(value: Int) {
+        viewModelScope.launch {
+            _stateFlow.emit(value+1)
+        }
+
+        viewModelScope.launch {
+            _message.emit("Back to Main Activity")
         }
     }
 }
@@ -87,3 +112,6 @@ Consumed 2*/
 //...
 //Produced 10
 //Consumed 10
+//4. StateFlow and SharedFlow
+// StateFlow: use for state, have init value, emit only if have different values
+// SharedFlow: use for event, don't have init value, can emit the same values
