@@ -11,7 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidJetpack">
         <activity
-            android:name=".compose.state.StateActivity"
+            android:name=".flow.ComposeStateActivity"
+            android:exported="false"
+            android:label="@string/title_activity_state"
+            android:theme="@style/Theme.AndroidJetpack" />
+        <activity
+            android:name=".compose.state.ComposeStateActivity"
             android:exported="false"
             android:label="@string/title_activity_state"
             android:theme="@style/Theme.AndroidJetpack" />
