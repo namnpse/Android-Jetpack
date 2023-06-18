@@ -11,6 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidJetpack">
         <activity
+            android:name=".compose.best_pratice.ComposeBestPracticeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_state"
+            android:theme="@style/Theme.AndroidJetpack" />
+        <activity
             android:name=".compose.sife_effect.SideEffectActivity"
             android:exported="false"
             android:label="@string/title_activity_state"
