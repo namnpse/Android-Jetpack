@@ -1,10 +1,8 @@
 package com.namnp.androidjetpack.testing
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.lang.Exception
 
 class CalcViewModel(
     private val calculations: Calculations
@@ -12,12 +10,12 @@ class CalcViewModel(
 
     var radius = MutableLiveData<String>()
 
-    var area = MutableLiveData<String>()
-    val areaValue: LiveData<String>
+    var area = MutableLiveData<String?>()
+    val areaValue: MutableLiveData<String?>
         get() = area
 
-    var circumference = MutableLiveData<String>()
-    val circumferenceValue: LiveData<String>
+    var circumference = MutableLiveData<String?>()
+    val circumferenceValue: MutableLiveData<String?>
         get() = circumference
 
 
@@ -35,7 +33,7 @@ class CalcViewModel(
             }
 
         } catch (e: Exception) {
-            Log.i("MYTAG", e.message.toString())
+            Log.i("CalcViewModel", e.message.toString())
             area.value = null
             circumference.value = null
         }

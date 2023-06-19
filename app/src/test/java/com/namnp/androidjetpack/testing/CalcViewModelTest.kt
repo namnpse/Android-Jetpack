@@ -14,6 +14,9 @@ class CalcViewModelTest{
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
+//    Since we are going to assert LiveData, we need to add InstantTaskExecutorRule to this class.
+//    This rule runs all Architecture Components-related background jobs in the same thread
+//    so that the test results happen synchronously, and in a repeatable order.
 
 
     @Before
