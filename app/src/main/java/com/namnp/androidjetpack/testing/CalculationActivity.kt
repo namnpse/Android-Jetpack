@@ -35,3 +35,4 @@ class CalculationActivity : AppCompatActivity() {
 //          + Mock is similar to stub, but they allows tester to set answers to method calls when writing the test case.
 //          + That means In mocks we dynamically set expected return values for the method calls.
 //          + Not like fakes, we usually generate stubs and mocks using a testing framework.
+//3. Naming Test function by pattern: ObjectUnderTest_givenInput_action
