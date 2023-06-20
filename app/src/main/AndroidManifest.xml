@@ -13,9 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidJetpack">
         <activity
+            android:name=".notification.NotificationSecondActivity"
+            android:exported="false"
+            android:label="NotificationSecondActivity"
+            android:theme="@style/Theme.AndroidJetpack" />
+        <activity
             android:name=".notification.NotificationActivity"
             android:exported="false"
-            android:label="@string/title_activity_state"
+            android:label="NotificationActivity"
             android:theme="@style/Theme.AndroidJetpack" />
         <activity
             android:name=".testing.CalculationActivity"

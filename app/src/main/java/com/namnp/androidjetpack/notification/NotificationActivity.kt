@@ -2,7 +2,9 @@ package com.namnp.androidjetpack.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
@@ -27,6 +29,15 @@ class NotificationActivity : AppCompatActivity() {
 
 
     private fun displayNotification() {
+
+        val tapResultIntent = Intent(this, NotificationSecondActivity::class.java)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            tapResultIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
         val notificationId = 45
         val notification = NotificationCompat.Builder(this@NotificationActivity, channelID)
             .setContentTitle("Demo Title")
@@ -34,6 +45,7 @@ class NotificationActivity : AppCompatActivity() {
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
             .build()
         notificationManager?.notify(notificationId, notification)
 
