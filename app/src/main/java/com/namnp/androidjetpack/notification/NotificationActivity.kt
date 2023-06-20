@@ -38,14 +38,37 @@ class NotificationActivity : AppCompatActivity() {
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
+        //action button details
+        val intentDetails = Intent(this, NotificationDetailsActivity::class.java)
+        val pendingIntentDetails: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            intentDetails,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val actionDetails: NotificationCompat.Action =
+            NotificationCompat.Action.Builder(0, "Details", pendingIntentDetails).build()
+        // action button settings
+        val intentSettings = Intent(this, NotificationSettingsActivity::class.java)
+        val pendingIntentSettings: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            intentSettings,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val actionSettings: NotificationCompat.Action =
+            NotificationCompat.Action.Builder(0, "Settings", pendingIntentSettings).build()
+
         val notificationId = 45
         val notification = NotificationCompat.Builder(this@NotificationActivity, channelID)
-            .setContentTitle("Demo Title")
-            .setContentText("This is a demo notification")
+            .setContentTitle("Notification Title")
+            .setContentText("Notification Content")
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
+            .addAction(actionDetails)
+            .addAction(actionSettings)
             .build()
         notificationManager?.notify(notificationId, notification)
 
