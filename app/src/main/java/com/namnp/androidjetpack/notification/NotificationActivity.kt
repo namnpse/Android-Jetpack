@@ -10,11 +10,13 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.app.RemoteInput
 import com.namnp.androidjetpack.R
 
 class NotificationActivity : AppCompatActivity() {
     private val channelID = "com.namnp.androidjetpack.channel1"
     private var notificationManager: NotificationManager? = null
+    private val KEY_REPLY_IN_NOTI = "key_reply"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +61,19 @@ class NotificationActivity : AppCompatActivity() {
         val actionSettings: NotificationCompat.Action =
             NotificationCompat.Action.Builder(0, "Settings", pendingIntentSettings).build()
 
+        //reply action
+        val remoteInput: RemoteInput = RemoteInput.Builder(KEY_REPLY_IN_NOTI).run{
+            setLabel("Insert your name here")
+            build()
+        }
+
+        val replyAction : NotificationCompat.Action = NotificationCompat.Action.Builder(
+            0,
+            "REPLY",
+            pendingIntent
+        ).addRemoteInput(remoteInput)
+            .build()
+
         val notificationId = 45
         val notification = NotificationCompat.Builder(this@NotificationActivity, channelID)
             .setContentTitle("Notification Title")
@@ -69,6 +84,7 @@ class NotificationActivity : AppCompatActivity() {
             .setContentIntent(pendingIntent)
             .addAction(actionDetails)
             .addAction(actionSettings)
+            .addAction(replyAction)
             .build()
         notificationManager?.notify(notificationId, notification)
 
