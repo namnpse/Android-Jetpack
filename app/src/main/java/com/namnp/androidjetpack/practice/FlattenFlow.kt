@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
 
 fun main() {
-    flatMapLatestOperator()
+    flatMapMergeOperator()
 }
 
 fun flatMapMergeOperator() = runBlocking {
@@ -21,6 +21,14 @@ fun flatMapMergeOperator() = runBlocking {
             println("Value is $it, time taken is ${System.currentTimeMillis() - startTime} ms")
         }
 }
+/*
+Value is First emitted value 1, time taken is 172 ms
+Value is First emitted value 2, time taken is 268 ms
+Value is First emitted value 3, time taken is 369 ms
+Value is Second emitted value 1, time taken is 673 ms
+Value is Second emitted value 2, time taken is 768 ms
+Value is Second emitted value 3, time taken is 870 ms
+*/
 
 fun flatMapConcatOperator() = runBlocking {
     val startTime = System.currentTimeMillis()
@@ -30,6 +38,14 @@ fun flatMapConcatOperator() = runBlocking {
             println("Value is $it, time taken is ${System.currentTimeMillis() - startTime} ms")
         }
 }
+/*
+Value is First emitted value 1, time taken is 128 ms
+Value is Second emitted value 1, time taken is 629 ms
+Value is First emitted value 2, time taken is 730 ms
+Value is Second emitted value 2, time taken is 1230 ms
+Value is First emitted value 3, time taken is 1330 ms
+Value is Second emitted value 3, time taken is 1831 ms
+*/
 
 fun flatMapLatestOperator() = runBlocking {
     val startTime = System.currentTimeMillis()
@@ -39,6 +55,12 @@ fun flatMapLatestOperator() = runBlocking {
             println("Value is $it, time taken is ${System.currentTimeMillis() - startTime} ms")
         }
 }
+/*
+Value is First emitted value 1, time taken is 157 ms
+Value is First emitted value 2, time taken is 280 ms
+Value is First emitted value 3, time taken is 381 ms
+Value is Second emitted value 3, time taken is 882 ms
+*/
 
 fun getFlow(value: Int) = flow {
     emit("First emitted value $value")
