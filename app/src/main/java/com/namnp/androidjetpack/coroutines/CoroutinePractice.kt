@@ -27,6 +27,8 @@ suspend fun sequentialByDefault() {
 //Completed in 2017 ms
 
 
+// Structured concurrency with async
+// if something goes wrong in concurrentSum() -> all coroutine inside it will be cancelled
 suspend fun concurrentUsingAsync() {
     val time = measureTimeMillis {
         println("The answer is ${concurrentSum()}")
@@ -97,3 +99,38 @@ fun somethingUsefulOneAsync() = GlobalScope.async {
 fun somethingUsefulTwoAsync() = GlobalScope.async {
     doSomethingUsefulTwo()
 }
+
+// Structured concurrency with async
+// if something goes wrong in concurrentSum() -> all coroutine inside it will be cancelled
+suspend fun structuredConcurrency() = runBlocking<Unit> {
+    try {
+        failedConcurrentSum()
+    } catch(e: ArithmeticException) {
+        println("Computation failed with ArithmeticException")
+    }
+}
+
+suspend fun failedConcurrentSum(): Int = coroutineScope {
+    val one = async {
+        try {
+            delay(5000) // Emulates very long computation
+            42
+        }
+        catch(e: Exception) {
+            0
+        }
+        finally {
+            println("First child was cancelled")
+        }
+    }
+    val two = async<Int> {
+        println("Second child throws an exception")
+        throw ArithmeticException()
+    }
+    one.await() + two.await()
+}
+/*
+Second child throws an exception
+First child was cancelled
+Computation failed with ArithmeticException
+*/
