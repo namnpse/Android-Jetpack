@@ -1,19 +1,61 @@
 package com.namnp.androidjetpack.extensions
 
+// 1 Value from EditText
+// 2 Start Activity
+// 3 Check Network
 
-// 1. Value from EditText
+//4. Check Permission
+
+//6. toEditable()
+
+//7. Screen Size
+//import android.content.Context
+//import android.os.Build
+
+//8. System Service Managers
+//import android.content.Context
+//import android.net.ConnectivityManager
+//import android.view.WindowManager
+//import androidx.core.content.ContextCompat
+
+//9. Copy to clipboard
+//import android.content.Context
+//import androidx.core.content.ContextCompat
+
+// 10
+import android.app.Activity
+import android.app.DownloadManager
+import android.app.NotificationManager
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Insets
+import android.graphics.Rect
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
+import android.text.Editable
+import android.util.DisplayMetrics
+import android.util.Size
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.EditText
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 
+// ------------------------
+
+// 1. Value from EditText
 val EditText.value
     get() = text?.toString() ?: ""
 // Usage: val name = edtName.value
 
 // 2. Start Activity
-import android.app.Activity
-import android.content.Intent
-
 fun Activity.startActivity(
     cls: Class<*>,
     finishCallingActivity: Boolean = true,
@@ -32,11 +74,6 @@ fun Activity.startActivity(
 //}
 
 //3. Check Network
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import androidx.fragment.app.Fragment
-
 @RequiresApi(Build.VERSION_CODES.M)
 fun Context.isNetworkAvailable(): Boolean {
     val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -59,9 +96,6 @@ fun Fragment.isNetworkAvailable() = requireContext().isNetworkAvailable()
 //}
 
 //4. Check Permission
-import android.content.pm.PackageManager
-import androidx.core.content.ContextCompat
-
 fun Context.isPermissionGranted(permission: String) = run {
     ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }
@@ -85,22 +119,12 @@ fun String.removeDuplicateWhitespaces(): String {
 //"Hello,     world!!!".removeDuplicateWhitespaces() // Output: Hello, world!!!
 
 //6. toEditable()
-import android.text.Editable
 fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
 //Usage:
 //edtName.text = "First name".toEditable()
 
 //7. Screen Size
-//import android.content.Context
-import android.graphics.Insets
-import android.graphics.Rect
-//import android.os.Build
-import android.util.DisplayMetrics
-import android.util.Size
-import android.view.WindowInsets
-import android.view.WindowManager
-
 val Context.screenSize: Size
     get() {
         val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -136,13 +160,6 @@ val Context.screenSize: Size
 //val deviceWidth = size.width
 
 //8. System Service Managers
-import android.app.DownloadManager
-import android.app.NotificationManager
-//import android.content.Context
-//import android.net.ConnectivityManager
-//import android.view.WindowManager
-//import androidx.core.content.ContextCompat
-
 val Context.windowManager
     get() = ContextCompat.getSystemService(this, WindowManager::class.java)
 
@@ -160,11 +177,6 @@ val Context.downloadManager
 //val manager = requireContext().downloadManager// In Fragment
 
 //9. Copy to clipboard
-import android.content.ClipData
-import android.content.ClipboardManager
-//import android.content.Context
-//import androidx.core.content.ContextCompat
-
 fun String.copyToClipboard(context: Context) {
     val clipboardManager = ContextCompat.getSystemService(context, ClipboardManager::class.java)
     val clip = ClipData.newPlainText("clipboard", this)
@@ -175,12 +187,6 @@ fun String.copyToClipboard(context: Context) {
 //"This is clipboard".copyToClipboard(context)
 
 //10. Boolean Expressions
-
-@file:OptIn(ExperimentalContracts::class)
-
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.contract
-
 @OptIn(ExperimentalContracts::class)
 fun Boolean?.isTrue(): Boolean {
     contract {

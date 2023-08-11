@@ -1,6 +1,5 @@
 package com.namnp.androidjetpack.rxjava
 
-import android.util.Log
 import io.reactivex.rxjava3.core.Observable
 
 fun main() {
@@ -36,12 +35,12 @@ private fun deferOperator() {
 
     val brandSubscription = brandObservable
         .subscribe { brand ->
-            Log.d("DeferExample", "brandObservable : $brand")
+            println("brandObservable : $brand")
         }
 
     val brandDeferSubscription = brandDeferObservable
         .subscribe { brand ->
-            Log.d("DeferExample", "brandDeferObservable : $brand")
+            println("brandDeferObservable : $brand")
         }
 
 // OUTPUT:
