@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/app_navigation"
+            app:startDestination="@id/step1Fragment">
+
+    <fragment android:id="@+id/step1Fragment"
+              android:name="com.namnp.androidjetpack.navigation.onboarding.fragments.OnboardingStep1Fragment"
+              android:label="fragment_step1"
+              tools:layout="@layout/fragment_onboarding_step1">
+        <action android:id="@+id/action_step1_to_step2"
+                app:destination="@id/step2Fragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment android:id="@+id/step2Fragment"
+              android:name="com.namnp.androidjetpack.navigation.onboarding.fragments.OnboardingStep2Fragment"
+              android:label="fragment_my_second"
+              tools:layout="@layout/fragment_onboarding_step2">
+        <argument
+            android:name="arg1"
+            app:argType="string"
+            android:defaultValue="default string"/>
+        <argument
+                android:name="arg2"
+                app:argType="integer"
+                android:defaultValue="2"/>
+        <argument android:name="arg3"
+                  app:argType="com.namnp.androidjetpack.navigation.onboarding.ParcelableDataArgs"
+                  app:nullable="true"/>
+        <action android:id="@+id/action_step2_to_step3"
+                app:destination="@id/step3Fragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
+    <fragment android:id="@+id/step3Fragment"
+              android:name="com.namnp.androidjetpack.navigation.onboarding.fragments.OnboardingStep3Fragment"
+              android:label="fragment_my_third"
+              tools:layout="@layout/fragment_onboarding_step3">
+        <action android:id="@+id/action_step3_to_step1"
+                app:popUpTo="@id/step1Fragment"
+
+        />
+        <action android:id="@+id/action_step3_to_step2"
+                app:popUpTo="@id/step2Fragment"/>
+    </fragment>
+</navigation>

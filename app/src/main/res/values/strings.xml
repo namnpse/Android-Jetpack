@@ -10,4 +10,7 @@
     <string name="radius_of_the_circle">Radius of the circle</string>
     <string name="area">Area :</string>
     <string name="circumference">Circumference :</string>
+    <string name="congrts">Congratulations..!</string>
+    <string name="navigateToHome">Navigate To Home</string>
+    <string name="navigateToPrev">Navigate To Previous Page</string>
 </resources>
