@@ -13,4 +13,7 @@
     <string name="congrts">Congratulations..!</string>
     <string name="navigateToHome">Navigate To Home</string>
     <string name="navigateToPrev">Navigate To Previous Page</string>
+    <string name="settings_fragment_text">Settings Fragment</string>
+    <string name="deep_link_instructions">Type your deep link args</string>
+    <string name="send_deep_link_notification_button">Send deep link notification</string>
 </resources>
