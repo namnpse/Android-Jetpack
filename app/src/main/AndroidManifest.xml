@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidJetpack">
         <activity
+            android:name=".compose.sharing_data.SharingDataActivity"
+            android:exported="false" />
+        <activity
             android:name=".navigation.onboarding.OnboardingActivity"
             android:exported="false" />
         <activity
