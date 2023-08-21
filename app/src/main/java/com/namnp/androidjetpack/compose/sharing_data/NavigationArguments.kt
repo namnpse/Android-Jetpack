@@ -17,6 +17,14 @@ const val SET_NUMBER = "SET_NUMBER"
 const val REP_NUMBER = "REP_NUMBER"
 //createExercise/{exerciseId}/{workoutId}?setNumber={setNumber}&repNumber={repNumber}
 
+// NOTE
+// BENEFIT:
+//+ easy, straightforward
+// DISADVANTAGE:
+//+ hard to pass in nested level/graph (have to pass level 1->2->3...->7)
+//+ hard to pass complex object, parcelable data
+//+ only pass stateless param (only pass value, cannot update or change)
+
 @Composable
 fun NavigationArgs() {
     val navController = rememberNavController()
