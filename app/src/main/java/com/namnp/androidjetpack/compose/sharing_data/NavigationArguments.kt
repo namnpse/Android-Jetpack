@@ -25,6 +25,7 @@ const val REP_NUMBER = "REP_NUMBER"
 //+ hard to pass complex object, parcelable data
 //+ only pass stateless param (only pass value, cannot update or change)
 
+// WAY 1
 @Composable
 fun NavigationArgs() {
     val navController = rememberNavController()

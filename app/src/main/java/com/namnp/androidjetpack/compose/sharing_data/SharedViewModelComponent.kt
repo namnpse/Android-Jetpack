@@ -24,6 +24,7 @@ import com.namnp.androidjetpack.compose.sharing_data.util.SharedViewModel
 //2. Disadvantage:
 //+ hard to debug because data can be changed or updated from anywhere
 
+// WAY 2
 @Composable
 fun SharedViewModelComponent() {
     val navController = rememberNavController()
