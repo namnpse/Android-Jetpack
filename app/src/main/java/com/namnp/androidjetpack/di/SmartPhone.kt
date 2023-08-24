@@ -1,16 +1,18 @@
 package com.namnp.androidjetpack.di
 
 import android.util.Log
+import dagger.Lazy
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton // now, instead of creating a new instance, Dagger reuses the existing one
-class SmartPhone @Inject constructor(val battery: Battery, val simCard: SIMCard, val memoryCard: MemoryCard) {
+// lazy injection constructor
+class SmartPhone @Inject constructor(val battery: Lazy<Battery>, val simCard: Lazy<SIMCard>, val memoryCard: Lazy<MemoryCard>) {
 
     init {
-        battery.getPower()
-        simCard.getConnection()
-        memoryCard.getSpaceAvailablity()
+        battery.get().getPower() // lazy injection
+        simCard.get().getConnection()
+        memoryCard.get().getSpaceAvailablity()
         Log.i("DI", "SmartPhone Constructed")
     }
 
