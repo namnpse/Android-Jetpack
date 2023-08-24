@@ -97,6 +97,9 @@
         <activity
             android:name=".data_binding.TwoWayBindingActivity"
             android:exported="true" />
+        <activity
+            android:name=".di.LazyInjectionActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -11,4 +11,5 @@ interface SmartPhoneComponent {
 
     // In DependencyInjectionActivity, we can get all DI object in DI graph
     fun inject(dependencyInjectionActivity: DependencyInjectionActivity)
+    fun inject(dependencyInjectionActivity: LazyInjectionActivity)
 }
