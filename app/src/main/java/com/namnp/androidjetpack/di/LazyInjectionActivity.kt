@@ -12,6 +12,10 @@ class LazyInjectionActivity : AppCompatActivity() {
     @Inject
     lateinit var smartPhone: Lazy<SmartPhone> // lazy inject, only init object when smartPhone.get() is called
     // cannot use private, if not -> cannot be injected
+    // disadvantage when lazy inject:
+//    + Using Lazy adds the semantic overhead of having to use get().
+//    + Lazy locks a Provider with a DoubleCheck making it more costly than not having Lazy.
+//    + DoubleCheck will try to access the object, if not initiated, it will lock and initialize the object.
 
     // can get any other DI object by using @Inject field like above
 //    @Inject
@@ -44,7 +48,7 @@ class LazyInjectionActivity : AppCompatActivity() {
         (application as AndroidJetpackApplication).smartPhoneComponent
             .inject(this) // inject new instance every time call inject() func
         val battery = smartPhone.get().battery // only init object when smartPhone.get() is called
-        println(battery.getPower())
+        println(battery.get().getPower())
     // ( try rotate screen or call inject in other activities to see)
     // -> to avoid this: use @Singleton annotation
     }
