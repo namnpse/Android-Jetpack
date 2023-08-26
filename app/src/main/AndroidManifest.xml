@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidJetpack">
         <activity
+            android:name=".recycler_view.diff_util.RecyclerViewUsingDiffUtilActivity"
+            android:exported="false" />
+        <activity
             android:name=".compose.sharing_data.SharingDataActivity"
             android:exported="false" />
         <activity

@@ -3,7 +3,7 @@ package com.namnp.androidjetpack
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.namnp.androidjetpack.di.LazyInjectionActivity
+import com.namnp.androidjetpack.recycler_view.diff_util.RecyclerViewUsingDiffUtilActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity() {
 //        val intent = Intent(this, NotificationActivity::class.java)
 //        val intent = Intent(this, OnboardingActivity::class.java)
 //        val intent = Intent(this, SharingDataActivity::class.java)
-        val intent = Intent(this, LazyInjectionActivity::class.java)
+//        val intent = Intent(this, LazyInjectionActivity::class.java)
+        val intent = Intent(this, RecyclerViewUsingDiffUtilActivity::class.java)
         startActivity(intent)
     }
 }
