@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidJetpack">
         <activity
+            android:name=".paging.doggo.presentation.DoggoActivity"
+            android:exported="false" />
+        <activity
             android:name=".recycler_view.diff_util.RecyclerViewUsingDiffUtilActivity"
             android:exported="false" />
         <activity

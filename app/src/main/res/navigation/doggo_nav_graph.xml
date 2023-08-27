@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/doggo_nav_graph"
+    app:startDestination="@id/remote"
+    >
+
+    <fragment
+        android:id="@+id/local"
+        android:name="com.namnp.androidjetpack.paging.doggo.presentation.local.DoggoLocalFragment"
+        tools:layout="@layout/fragment_doggo_local"
+        />
+
+    <fragment
+        android:id="@+id/remote"
+        android:name="com.namnp.androidjetpack.paging.doggo.presentation.remote.DoggoRemoteFragment"
+        tools:layout="@layout/fragment_doggo_remote"
+        />
+
+    <fragment
+        android:id="@+id/loader"
+        android:name="com.namnp.androidjetpack.paging.doggo.presentation.loader.DoggoLoaderFragment"
+        tools:layout="@layout/fragment_doggo_loader"
+        />
+
+</navigation>
