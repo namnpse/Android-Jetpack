@@ -5,12 +5,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.namnp.androidjetpack.R
 
 class UserAdapter(
     private val users: MutableList<User>,
-) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+//) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+) : ListAdapter<User, UserAdapter.UserViewHolder>(DIFF_UTIL) {
+
+    object DIFF_UTIL: DiffUtil.ItemCallback<User>() {
+        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
+            return oldItem == newItem
+        }
+    }
 
     fun updateListUsers(newList: List<User>) {
         val diffUsers = DiffUtil.calculateDiff(UserDiffUtilCallback(users, newList))
@@ -27,6 +39,11 @@ class UserAdapter(
     override fun getItemCount(): Int = users.size
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
+
+// only available in ListAdapter
+//        getItem(position)?.let { user ->
+//            holder.onBind(user)
+//        }
         val user = users[position]
         holder.onBind(user)
     }
@@ -37,6 +54,10 @@ class UserAdapter(
         private val address: AppCompatTextView = view.findViewById(R.id.address)
 
         fun onBind(user: User) {
+// only available in ListAdapter
+//        getItem(position)?.let { user ->
+//            holder.onBind(user)
+//        }
             username.text = user.name
             address.text = user.address
         }
