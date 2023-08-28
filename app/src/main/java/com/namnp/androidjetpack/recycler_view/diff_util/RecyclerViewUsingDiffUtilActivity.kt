@@ -35,7 +35,8 @@ class RecyclerViewUsingDiffUtilActivity : AppCompatActivity() {
 
         btnSortAscending.setOnClickListener {
             val updateListUsers = users.sortedBy { it.id }
-            userAdapter.updateListUsers(updateListUsers)
+            userAdapter.submitList(updateListUsers) // Way 1, update internally, don't need to declare user list in UserAdapter
+//            userAdapter.updateListUsers(updateListUsers) // Way 2
         }
     }
 }

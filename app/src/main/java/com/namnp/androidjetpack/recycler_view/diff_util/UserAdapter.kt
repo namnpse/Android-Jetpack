@@ -14,7 +14,7 @@ class UserAdapter(
 //) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 ) : ListAdapter<User, UserAdapter.UserViewHolder>(DIFF_UTIL) {
 
-    object DIFF_UTIL: DiffUtil.ItemCallback<User>() {
+    private object DIFF_UTIL: DiffUtil.ItemCallback<User>() {
         override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
             return oldItem.id == newItem.id
         }
