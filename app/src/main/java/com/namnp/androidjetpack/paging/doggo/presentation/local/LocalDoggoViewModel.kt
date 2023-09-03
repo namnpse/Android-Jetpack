@@ -7,9 +7,10 @@ import androidx.paging.cachedIn
 import com.namnp.androidjetpack.paging.doggo.data.model.DoggoImageModel
 import com.namnp.androidjetpack.paging.doggo.data.repository.DoggoRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class LocalDoggoViewModel(
-    val repository: DoggoRepository = DoggoRepository.getInstance()
+class LocalDoggoViewModel @Inject constructor(
+    val repository: DoggoRepository
 ): ViewModel() {
 
     fun fetchDoggoImages(): Flow<PagingData<DoggoImageModel>> {

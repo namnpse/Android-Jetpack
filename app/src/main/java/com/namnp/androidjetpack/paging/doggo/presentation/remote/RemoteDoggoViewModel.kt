@@ -12,9 +12,10 @@ import com.namnp.androidjetpack.paging.doggo.data.repository.DoggoRepository
 import io.reactivex.Observable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class RemoteDoggoViewModel(
-    val repository: DoggoRepository = DoggoRepository.getInstance()
+class RemoteDoggoViewModel @Inject constructor(
+    val repository: DoggoRepository
 ): ViewModel() {
 
     /**

@@ -11,16 +11,15 @@ import com.namnp.androidjetpack.paging.doggo.data.data_source.DoggoMediator
 import com.namnp.androidjetpack.paging.doggo.data.data_source.DoggoPagingSource
 import com.namnp.androidjetpack.paging.doggo.data.model.DoggoImageModel
 import com.namnp.androidjetpack.paging.doggo.data.repository.local.DoggoDatabase
-import com.namnp.androidjetpack.paging.doggo.data.repository.local.LocalInjector
 import com.namnp.androidjetpack.paging.doggo.data.repository.remote.DoggoApiService
-import com.namnp.androidjetpack.paging.doggo.data.repository.remote.RemoteInjector
 import io.reactivex.Observable
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class DoggoRepository(
-    val doggoApiService: DoggoApiService = RemoteInjector.injectDoggoApiService(),
-    val appDatabase: DoggoDatabase? = LocalInjector.injectDb()
+class DoggoRepository @Inject constructor(
+    private val doggoApiService: DoggoApiService,
+    private val appDatabase: DoggoDatabase
 ) {
 
     companion object {
@@ -28,7 +27,7 @@ class DoggoRepository(
         const val DEFAULT_PAGE_SIZE = 20
 
         //get doggo repository instance
-        fun getInstance() = DoggoRepository()
+//        fun getInstance() = DoggoRepository()
     }
 
     private val pageConfig = PagingConfig(pageSize = DEFAULT_PAGE_SIZE, enablePlaceholders = true)

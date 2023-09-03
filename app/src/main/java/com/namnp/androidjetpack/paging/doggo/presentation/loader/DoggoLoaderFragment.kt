@@ -8,10 +8,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.namnp.androidjetpack.R
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class DoggoLoaderFragment: Fragment(R.layout.fragment_doggo_loader) {
 
     lateinit var rvDoggoLoader: RecyclerView
@@ -23,6 +25,7 @@ class DoggoLoaderFragment: Fragment(R.layout.fragment_doggo_loader) {
         super.onViewCreated(view, savedInstanceState)
 
         initViews(view)
+        getDoggoImages()
     }
 
     private fun initViews(view: View) {

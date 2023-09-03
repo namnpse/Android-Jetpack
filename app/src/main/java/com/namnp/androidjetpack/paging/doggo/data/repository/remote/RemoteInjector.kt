@@ -13,7 +13,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 object RemoteInjector {
 
     const val API_KEY = "d6fd31ff-2b46-4600-b25d-cbcd09f0ac14"
-    private const val API_END_POINT = "https://api.thedogapi.com"
+    const val API_END_POINT = "https://api.thedogapi.com"
     const val HEADER_API_KEY = "x-api-key"
 
     fun injectDoggoApiService(retrofit: Retrofit = getRetrofit()): DoggoApiService {
