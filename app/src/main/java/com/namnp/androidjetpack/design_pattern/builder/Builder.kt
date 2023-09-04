@@ -1,4 +1,4 @@
-package com.namnp.androidjetpack.design_pattern
+package com.namnp.androidjetpack.design_pattern.builder
 
 // Use case: Room.DatabaseBuilder(), Retrofit.Builder()
 
