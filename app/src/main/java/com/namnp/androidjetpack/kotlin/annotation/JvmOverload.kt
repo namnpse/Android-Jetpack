@@ -2,6 +2,7 @@ package com.namnp.androidjetpack.kotlin.annotation
 
 import java.util.Date
 
+//@JvmOverloads: To use the default values passed as an argument in Kotlin code from the Java code
 data class Session @JvmOverloads constructor(val name: String, val date: Date = Date())
 
 fun main() {
