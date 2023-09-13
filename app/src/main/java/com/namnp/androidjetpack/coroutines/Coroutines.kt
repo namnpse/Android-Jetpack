@@ -34,6 +34,17 @@ fun coroutineBuilder() {
     println("Hello,")     // main thread continues while coroutine executes
     Thread.sleep(2000L)   // block main thread for 2 seconds to keep JVM alive
 }
+/*
+1
+Hello,
+World!
+2
+3
+waiting concurrent sums
+2+2
+3+3
+Total is: 10
+*/
 
 fun coroutineScopeFun() = runBlocking { // this: CoroutineScope
     launch {
@@ -55,6 +66,12 @@ fun coroutineScopeFun() = runBlocking { // this: CoroutineScope
 
     println("Coroutine scope is over") // This is not printed until nested launch completes/is cancelled
 }
+/*
+Task from nested launch, this is printed
+Task from first coroutine scope
+Coroutine scope is over
+Task from runBlocking
+*/
 
 fun cancellingJob() = runBlocking {
 //    job = launch {

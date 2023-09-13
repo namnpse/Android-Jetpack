@@ -66,7 +66,7 @@ private fun handlingExceptionUsingCoroutineExceptionHandler() = runBlocking {
         // coroutineContext: context information about which coroutine throws exceptions
         println("Caught exception in handler: $throwable")
     }
-    launch {
+    launch(handlerException) {
         throw Exception("Error")
     }
 }

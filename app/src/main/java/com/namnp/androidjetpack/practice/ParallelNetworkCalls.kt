@@ -35,6 +35,7 @@ fun concurrentApproachWithWaitTime() {
                 data2Response = call2.await()
                 println("WAIT 3")
                 data3Response = call3.await()
+//                awaitAll(call1, call2, call3)
             } catch (ex: Exception) {
                 ex.printStackTrace()
             }
