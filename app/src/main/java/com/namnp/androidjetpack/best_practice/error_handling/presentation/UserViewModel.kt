@@ -7,30 +7,27 @@ import com.namnp.androidjetpack.best_practice.error_handling.domain.Result
 import com.namnp.androidjetpack.best_practice.error_handling.domain.User
 import com.namnp.androidjetpack.best_practice.error_handling.domain.UserDataValidatorUseCase
 import com.namnp.androidjetpack.best_practice.string_resource_view_model.UiText
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import com.namnp.androidjetpack.best_practice.error_handling.presentation.UserContract.*
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import com.namnp.androidjetpack.mvi.MVI
+import com.namnp.androidjetpack.mvi.mvi
 
 class UserViewModel(
     private val authRepository: AuthRepository,
     private val userDataValidatorUseCase: UserDataValidatorUseCase,
-) : ViewModel() {
+) : ViewModel(), MVI<UserState, UserEvent, UserEffect> by mvi(initialUiState()) {
 
-    private val _userState = MutableStateFlow(UserState())
+    // comment these since using MVI Delegate pattern
+/*    private val _userState = MutableStateFlow(UserState())
     val userState: StateFlow<UserState> = _userState.asStateFlow()
 
     private val _events = Channel<UserEffect>()
-    val events = _events.receiveAsFlow()
+    val events = _events.receiveAsFlow()*/
 
-    fun onEvent(event: UserEvent) {
-        when(event) {
+    override fun onEvent(newUiEvent: UserEvent) {
+        when(newUiEvent) {
             is UserEvent.OnRegisterClick -> {
-                registerUser(event.password)
+                registerUser(newUiEvent.password)
             }
         }
     }
@@ -54,18 +51,22 @@ class UserViewModel(
             when(val result = authRepository.register(password)) {
                 is Result.Error -> {
                     val errorMsg = result.error.asUiText() // or result.asErrorUiText()
-                    _events.send(UserEffect.ShowError(errorMsg))
+//                    _events.send(UserEffect.ShowError(errorMsg))
+                    emitSideEffect(UserEffect.ShowError(errorMsg)) // using MVI Delegate
                 }
 
                 is Result.Success -> {
                     val user: User = result.data // getting user from server
                     // display user info
-                    _userState.update { _userState.value.copy(user = user) }
+//                    _userState.update { _userState.value.copy(user = user) }
+                    updateUiState { copy(user = user) } // using MVI Delegate
                 }
             }
         }
     }
 }
+
+fun initialUiState() = UserState(User(0, "", "", ""))
 
 // MVI pattern
 interface UserContract {
