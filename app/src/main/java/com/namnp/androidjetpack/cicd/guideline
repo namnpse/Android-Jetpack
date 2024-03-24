@@ -1,0 +1,87 @@
+🔐 Setup for signed builds
+When creating signed builds, you need a keystore file and a key.properties file with the secrets on how to unlock the keystore.
+
+I.1 Keystore file
+To create a keystore, use Android Studio and follow the official documentation. Be careful and note the values you use for keystore password, key alias, and key password -- you will use these when creating the key.properties file.
+
+I.2 key.properties file
+The key.properties file is a plain text file, and it should look like this:
+
+storeFile=FILENAME_OF_KEYSTORE_YOU_CREATED
+storePassword=XXXXXX
+keyAlias=XXXXXX
+keyPassword=XXXXXX
+Here's a sample of a key.properties file. Note that the storeFile key only has the name of the store file without the path:
+
+storeFile=keystore.jks
+storePassword=veryStrongPassword
+keyAlias=reasonableAlias
+keyPassword=anotherStrongPassword
+
+II. Storing secrets in GitHub Actions
+GitHub Actions only supports text-based secrets; uploading files is not allowed. So you will encode your keystore file and key.properties file using Base64, and add the encoded text as secrets for GitHub Actions. When the workflow is running, it will fetch the secrets from GitHub, decode them, and put the files in the correct place so that the release build is generated correctly.
+
+On macOS, run this on the command line to encode a file and copy the encoded string to your clipboard:
+
+base64 -i FILENAME | pbcopy
+Then, go to the Actions Secrets of your GitHub repository (Settings > Secrets and variables (in the sidebar) > Actions), and click "New repository secret". Ensure that the name of the secret is the same name that is being used in the Actions workflow file. We're using:
+
+KEYSTORE_BASE64 for the keystore file
+KEY_PROPERTIES_BASE64 for the key.properties file
+
+III. Reading keystore data in build.gradle
+Next, must modify your build.gradle file so that Gradle knows it has to read the keystore and associated key.properties data while creating a release build.
+
+Add this before the android block of your app's build.gradle file. Note that this is the build file inside the app folder, and not the file in the root of the project.
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+Now, inside the android block, add these two blocks: signingConfig and buildTypes. If you already have either or both of those blocks, just add the release block to your existing block(s).
+
+signingConfigs {
+    release {
+        keyAlias keystoreProperties['keyAlias']
+        keyPassword keystoreProperties['keyPassword']
+        storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+        storePassword keystoreProperties['storePassword']
+    }
+}
+buildTypes {
+    release {
+        signingConfig signingConfigs.release
+    }
+}
+That's all! Now when you run a release build, Gradle knows it has to use the signingConfig.release information, where it will read the storeFile, storePassword, keyAlias, and keyPassword from your key.properties file.
+
+#️⃣ Dynamic app versioning
+By using workflow_dispatch in GitHub Actions, you can give arguments to a workflow run. We use this to pass build version information to the gradle file, which is useful if a different system, for e.g. Tramline, manages versioning for you. Here's how to do it:
+
+By default, the versionCode and versionName values are hardcoded in the build.gradle file like this:
+
+versionCode 1
+versionName "1.0.0"
+Replace those two lines with these instead:
+
+if (project.properties["VERSION_CODE"] != null) {
+    versionCode = project.properties["VERSION_CODE"] as Integer
+} else {
+    versionCode = 1
+}
+
+if (project.properties["VERSION_NAME"] != null) {
+    versionName = project.properties["VERSION_NAME"]
+} else {
+    versionName = "1.0.0"
+}
+This tells gradle to read versionCode and versionName from the project properties, if available. Next, we set the version information in the workflow run as environment variables. The naming scheme of the variables must match the convention exactly, as specified in the gradle documentation.
+
+As you can see in the generated workflow file below, versionCode is set as ORG_GRADLE_PROJECT_VERSION_CODE, and versionName is set as ORG_GRADLE_PROJECT_VERSION_NAME.
+
+All done! Now you can copy the workflow ⬇️
+CI:
+ci.yaml
+CD:
+

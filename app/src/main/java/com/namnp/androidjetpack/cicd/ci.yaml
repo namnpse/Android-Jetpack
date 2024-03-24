@@ -1,0 +1,60 @@
+name: Android release build
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      versionName:
+        description: 'User-facing release version name'
+        required: true
+        default: "1.0.0"
+      versionCode:
+        description: 'versionCode or build number'
+        required: true
+        default: '1'
+
+jobs:
+  signed-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup versionName regardless of how this action is triggered
+        id: version_name
+        run: |
+          WORKFLOW_INPUT=${{ github.event.inputs.versionName }}
+          VERSION_NAME=${WORKFLOW_INPUT:-"1.0.0"}
+          echo "ORG_GRADLE_PROJECT_VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+
+      - name: Setup versionCode regardless of how this action is triggered
+        id: version_code
+        run: |
+          WORKFLOW_INPUT=${{ github.event.inputs.versionCode }}
+          VERSION_CODE=${WORKFLOW_INPUT:-"1"}
+          echo "ORG_GRADLE_PROJECT_VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 11
+          cache: 'gradle'
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+      - name: Retrieve secrets
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEY_PROPERTIES_BASE64: ${{ secrets.KEY_PROPERTIES_BASE64 }}
+        run: |
+          echo $KEYSTORE_BASE64 | base64 --decode > app/keystore.jks
+          echo $KEY_PROPERTIES_BASE64 | base64 --decode > key.properties
+
+      - name: Build release AAB
+        run: ./gradlew --no-daemon bundleRelease
+
+      - name: Upload build file
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-aab
+          path: app/build/outputs/bundle/release/app-prod-release.aab
