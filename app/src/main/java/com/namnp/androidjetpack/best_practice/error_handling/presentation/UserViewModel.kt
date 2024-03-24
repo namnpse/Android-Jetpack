@@ -72,7 +72,7 @@ fun initialUiState() = UserState(User(0, "", "", ""))
 interface UserContract {
 
     data class UserState(
-        val user: User = User(0, "", "", ""),
+        val user: User,
     )
 
     sealed interface UserEvent {
